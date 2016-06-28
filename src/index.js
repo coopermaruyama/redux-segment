@@ -30,7 +30,6 @@ function appendAction(action: Object, analytics: Object) {
 function handleAction(getState: Function, next: Function, action: Object, options: Object) {
 
   if (action.meta && action.meta.analytics) return handleSpec(next, action);
-  else return next(action);
 
   if (typeof options.mapper[action.type] === 'function') {
 
@@ -42,6 +41,10 @@ function handleAction(getState: Function, next: Function, action: Object, option
 
     let analytics = {eventType: options.mapper[action.type]};
     return handleSpec(next, appendAction(action, analytics));
+  }
+
+  if (typeof action.meta === 'undefined') {
+    return next(action);
   }
 
 }
