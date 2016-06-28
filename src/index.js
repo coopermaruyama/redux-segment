@@ -17,7 +17,7 @@ function createTracker(options = {}) {
 }
 
 function appendAction(action: Object, analytics: Object) {
- 
+
   action.meta = Object.assign(
     {},
     {...action.meta},
@@ -28,15 +28,16 @@ function appendAction(action: Object, analytics: Object) {
 }
 
 function handleAction(getState: Function, next: Function, action: Object, options: Object) {
-  
+
   if (action.meta && action.meta.analytics) return handleSpec(next, action);
-  
+  else return next(action);
+
   if (typeof options.mapper[action.type] === 'function') {
-    
+
     let analytics = options.mapper[action.type](getState);
     return handleSpec(next, appendAction(action, analytics));
   }
-  
+
   if (typeof options.mapper[action.type] === 'string') {
 
     let analytics = {eventType: options.mapper[action.type]};
