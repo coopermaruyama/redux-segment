@@ -43,7 +43,7 @@ function handleAction(getState: Function, next: Function, action: Object, option
     return handleSpec(next, appendAction(action, analytics));
   }
 
-  if (typeof action.meta === 'undefined') {
+  if (!action.meta || !action.meta.analytics) {
     return next(action);
   }
 
