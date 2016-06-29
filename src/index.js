@@ -43,10 +43,7 @@ function handleAction(getState: Function, next: Function, action: Object, option
     return handleSpec(next, appendAction(action, analytics));
   }
 
-  if (!action.meta || !action.meta.analytics) {
-    return next(action);
-  }
-
+  return next(action);
 }
 
 function getFields(type: string, fields: Object, actionType: string) {
